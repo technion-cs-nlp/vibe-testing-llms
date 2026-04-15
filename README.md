@@ -7,11 +7,6 @@ _Understanding and Formalizing How Users VIBE-TEST LLMs._
 [![Contact](https://img.shields.io/badge/contact-email-green)](mailto:itay1itzhak@gmail.com)
 [![Pipeline_Docs](https://img.shields.io/badge/docs-scripts-green)](scripts/README.md)
 
-<div align="center">
-  <p><em>Project logo placeholder</em></p>
-  <!-- <img src="static/images/logo.png" alt="Project Logo" width="300"/> -->
-</div>
-
 ---
 
 ## 📘 Introduction
