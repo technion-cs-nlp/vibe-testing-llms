@@ -3,7 +3,7 @@
 _Understanding and Formalizing How Users VIBE-TEST LLMs._
 
 [![Paper](https://img.shields.io/badge/arXiv-paper-red)](https://arxiv.org/abs/XXXX.XXXXX)
-[![Website](https://img.shields.io/badge/website-project-blue)](https://technion-cs-nlp.github.io/vibe-testing-llms)
+[![Website](https://img.shields.io/badge/website-project-blue)](https://itay1itzhak.github.io/vibe-testing-llms)
 [![Contact](https://img.shields.io/badge/contact-email-green)](mailto:itay1itzhak@gmail.com)
 [![Pipeline_Docs](https://img.shields.io/badge/docs-scripts-green)](scripts/README.md)
 
