@@ -1,0 +1,128 @@
+{
+  "type": "object",
+  "properties": {
+    "persona_description": {
+      "type": "string",
+      "description": "A one-sentence summary of the user's identity and primary goal."
+    },
+    "input_dimensions": {
+      "type": "object",
+      "properties": {
+        "task_complexity_gradient": {
+          "type": "array",
+          "description": "The range of task complexity the user is comfortable with between 0 and 1.",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "real_world_context_embedding": {
+          "type": "string",
+          "description": "A label of the user's real-world context."
+        },
+        "persona_based_task_framing": {
+          "type": "string",
+          "description": "A label of the user's persona and how they would frame a task."
+        },
+        "preference_and_underspecification_handling": {
+          "type": "object",
+          "description": "How the user prefers the model to handle ambiguity and underspecified requirements.",
+          "properties": {
+            "default_behavior": {
+              "type": "string",
+              "description": "What the model should do by default when requirements are unclear."
+            },
+            "desired_clarification_style": {
+              "type": "string",
+              "description": "How the model should phrase clarifying questions when needed."
+            }
+          },
+          "required": [
+            "default_behavior",
+            "desired_clarification_style"
+          ]
+        }
+      },
+      "required": [
+        "task_complexity_gradient",
+        "real_world_context_embedding",
+        "persona_based_task_framing",
+        "preference_and_underspecification_handling"
+      ]
+    },
+    "output_dimensions": {
+      "type": "object",
+      "properties": {
+        "clarity_and_comprehensibility": {
+          "type": "integer",
+          "description": "On a scale of 1 to 5, how important is clear and understandable output for this user.",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "workflow_fit": {
+          "type": "integer",
+          "description": "On a scale of 1 to 5, how important is fitting the user's workflow in terms of time, steps, and iteration cost.",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "friction_and_frustration": {
+          "type": "integer",
+          "description": "On a scale of 1 to 5, how important is minimizing friction and frustration for this user.",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "reliability": {
+          "type": "integer",
+          "description": "On a scale of 1 to 5, how important is perceived reliability and trustworthiness for this user.",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "persona_consistency_and_context_awareness": {
+          "type": "integer",
+          "description": "On a scale of 1 to 5, how important is persona consistency and context awareness for this user.",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "safety_and_refusal_behavior": {
+          "type": "integer",
+          "description": "On a scale of 1 to 5, how important is appropriate safety and refusal behavior for this user.",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "anthropomorphism": {
+          "type": "integer",
+          "description": "On a scale of 1 to 5, how important is human-like interaction for this user (1 = prefers robotic, 5 = prefers human-like).",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "creativity_and_originality": {
+          "type": "integer",
+          "description": "On a scale of 1 to 5, how important are creative and original solutions for this user.",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "expressive_style": {
+          "type": "string",
+          "description": "A description of the user's preferred expressive style for model output."
+        }
+      },
+      "required": [
+        "clarity_and_comprehensibility",
+        "workflow_fit",
+        "friction_and_frustration",
+        "reliability",
+        "persona_consistency_and_context_awareness",
+        "safety_and_refusal_behavior",
+        "anthropomorphism",
+        "creativity_and_originality",
+        "expressive_style"
+      ]
+    }
+  },
+  "required": [
+    "persona_description",
+    "input_dimensions",
+    "output_dimensions"
+  ]
+}

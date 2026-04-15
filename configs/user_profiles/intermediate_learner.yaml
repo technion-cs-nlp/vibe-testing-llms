@@ -1,0 +1,26 @@
+user_id: "intermediate_learner_01"
+description: "I have moderate coding experience and typically work on debugging and small projects. I care most about getting the correct solution, and I appreciate helpful clarifications that support my learning as I go."
+persona_description: "An intermediate programmer who wants correctness plus learning-oriented support when needed."
+
+# Input-oriented dimensions
+input_dimensions:
+  task_complexity_gradient: [0.35, 0.75] # Focus on moderate complexity tasks
+  real_world_context_embedding: "debugging workflows and small-to-medium personal or coursework-style projects"
+  persona_based_task_framing: "supportive coach" # The model should act like a supportive coach
+  preference_and_underspecification_handling:
+    default_behavior: "ask brief clarifying questions when requirements are ambiguous, otherwise proceed with reasonable assumptions and explain them"
+    desired_clarification_style: "short questions + quick rationale + a safe default path"
+
+# Output-oriented dimensions
+output_dimensions:
+  clarity_and_comprehensibility: 5 # (Scale 1-5, 5 is most important)
+  workflow_fit: 3
+  plus_correctness: 3
+  correctness: 5 # Used only when correctness gating is not applied
+  friction_and_frustration: 4
+  reliability: 5
+  persona_consistency_and_context_awareness: 4
+  safety_and_refusal_behavior: 3
+  anthropomorphism: 3
+  creativity_and_originality: 1
+  expressive_style: "clear, structured, slightly explanatory; includes brief teaching notes and common pitfalls"

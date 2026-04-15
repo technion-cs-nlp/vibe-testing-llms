@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VerificationOutput",
+  "type": "object",
+  "properties": {
+    "same_end_goal": {
+      "type": "boolean"
+    },
+    "same_ground_truth": {
+      "type": "boolean"
+    },
+    "reason_if_failed": {
+      "type": ["string", "null"]
+    }
+  },
+  "required": ["same_end_goal", "same_ground_truth", "reason_if_failed"]
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ChangeIdentificationOutput",
+  "type": "object",
+  "properties": {
+    "changes_by_field": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "description": "The UserProfile field this set of changes targets."
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "A short, unique, snake_case identifier for the change."
+                },
+                "change": {
+                  "type": "string",
+                  "description": "A brief description of the modification."
+                },
+                "example": {
+                  "type": "string",
+                  "description": "A concrete example illustrating the change."
+                },
+                "rationale": {
+                  "type": "string",
+                  "description": "An explanation of why this change aligns with the user profile field."
+                }
+              },
+              "required": ["name", "change", "example", "rationale"]
+            }
+          }
+        },
+        "required": ["field", "options"]
+      }
+    }
+  },
+  "required": ["changes_by_field"]
+}

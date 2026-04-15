@@ -1,0 +1,405 @@
+model:
+  name: GptOssModel
+  params:
+    # -------------------------------------------------------------------------
+    # Backend selection
+    #
+    # IMPORTANT:
+    # - Default backend is HF/Harmony ("hf") for backward compatibility.
+    # - To use Unsloth, uncomment the "unsloth" block below.
+    # -------------------------------------------------------------------------
+
+    # --- Default (backward compatible): HuggingFace + Harmony backend ---
+    # backend: "hf"
+    # model_name: "openai/gpt-oss-20b"
+    # device: "auto"
+    cache_dir: "/mnt/nlp/models"
+
+    # --- Optional: Unsloth backend (GPU/CUDA required) ---
+    backend: "unsloth"
+
+    #GPT-OSS Unsloth repos (examples):
+    #- "unsloth/gpt-oss-20b"                     # MXFP4 format
+    #- "unsloth/gpt-oss-20b-unsloth-bnb-4bit"    # bitsandbytes 4-bit
+    model_name: "unsloth/gpt-oss-20b"
+    load_in_4bit: false
+    #model_name: "unsloth/gpt-oss-20b-unsloth-bnb-4bit"
+    #load_in_4bit: true # set true only for *bnb-4bit repos
+
+    #Unsloth loader params (match src/vibe_testing/models/gpt_oss_model.py):
+    dtype: null # None for auto detection
+    max_seq_length: 5000 # choose any long context
+    full_finetuning: false
+    #hf_token: "hf_..."          # only if using gated models
+prompt:
+  name: GptOssPrompt
+  params:
+    reasoning_effort: "low"
+    system_message: |
+      You are ChatGPT, a large language model trained by OpenAI.
+      Knowledge cutoff: 2024-06
+      Current date: 2025-08-28
+      Reasoning: low
+      # Valid channels: analysis, commentary, final. Channel must be included for every message.
+    developer_message: |
+      # Instructions
+      Follow the instructions strictly.
+
+generation_config:
+  name: default
+  params:
+    max_new_tokens: 5000
+    temperature: 1.0
+    top_p: 1.0
+    do_sample: false
+
+profiling_prompt: |
+  You are an expert user experience researcher. Your task is to analyze the following user description and generate a structured JSON profile based on it.
+
+  **User Description:**
+  "{description}"
+
+  Based on this description, create a JSON object that captures the user's persona, their needs regarding coding tasks, and their preferences for the output.
+
+  Your output MUST be a single, valid JSON object. Use the following structure and explanations as a guide.
+
+  **JSON Template:**
+  ```json
+  {{
+    "persona_description": "A one-sentence summary of the user's identity and primary goal.",
+    "input_dimensions": {{
+      "task_complexity_gradient": List[float, float], # the range of task complexity the user is comfortable with between 0 and 1
+      "real_world_context_embedding": string, # a label of the user's real-world context
+      "persona_based_task_framing": string # a label of the user's persona and how they would frame a task
+    }},
+    "output_dimensions": {{
+      "clarity_and_comprehensibility": int, # on a scale of 1 to 5, how clear and understandable is the answer needs to be for the user
+      "efficiency": int, # on a scale of 1 to 5, how efficient is the answer needs to be for the user
+      "expressive_style": string # a label of the user's preferred expressive style for the answer
+    }}
+  }}
+  ```
+
+  Generate the JSON object now.
+
+evaluation_prompts:
+  judge_prompt: |
+    You are an expert in evaluating programming code.
+    You will be given a programming task and a model's output.
+    Your task is to determine if the model's output is correct.
+
+
+    Programming Task:
+    ---
+    {programming_task}
+    ---
+
+    Model's Output:
+    ---
+    {model_output}
+    ---
+
+    Instructions:
+    1. Read the programming task and the model's output carefully.
+    2. Determine if the model's output is correct.
+    3. If the model's output is correct, output "correct".
+    4. If the model's output is incorrect, output "incorrect".
+    5. No extra keys, no trailing commas, no markdown fences, no commentary.
+
+    Make sure to output only the string "correct" or "incorrect" and nothing else.
+  extract_code_prompt: |
+    You are a STRICT code extractor and renamer. You do NOT solve problems. You do NOT fix logic. You do NOT write new code. You ONLY extract code that already exists in RAW_RESPONSE and (optionally) rename the entry point function to match the required name.
+
+    Inputs:
+    1) PROBLEM_PROMPT: the original task prompt (contains the required function name / entry point).
+    2) RAW_RESPONSE: the model's raw response text (may include explanations, multiple code blocks, tests, examples).
+
+    Output:
+    - Return ONLY Python code (no markdown fences, no commentary).
+    - The output must be a subset of code that appears in RAW_RESPONSE, with at most these edits:
+      (A) deleting non-solution code (tests, examples, prints, __main__ blocks, extra functions not needed)
+      (B) renaming the chosen function's name to match REQUIRED_ENTRYPOINT (and updating references to that name inside that function body)
+      (C) removing type annotations/docstrings/comments is allowed ONLY if they are already present in the extracted code block (you may keep them or delete them), but you may NOT add new ones.
+
+    ABSOLUTE PROHIBITIONS:
+    - Do NOT change logic, operators, constants, conditions, control flow, or return values.
+    - Do NOT add missing lines, imports, helper functions, error handling, or edge-case handling.
+    - Do NOT rewrite the solution in your own words or style.
+    - Do NOT merge multiple implementations into one.
+    - Do NOT wrap code in a new function or create a new wrapper.
+    - Do NOT “repair” syntax or indentation beyond copying an existing code block exactly as written (except for the allowed rename edits).
+    - If the existing code is wrong or incomplete, you must still return it as-is (after deletions/rename only). If no implementation exists, output empty string.
+
+    Procedure:
+    1) Identify REQUIRED_ENTRYPOINT from PROBLEM_PROMPT:
+      - Prefer the function name used in the provided test cases (e.g., assert REQUIRED_ENTRYPOINT(...)).
+      - Otherwise use the explicitly stated function name in the prompt.
+
+    2) Locate candidate function definitions in RAW_RESPONSE:
+      - Prefer fenced Python code blocks, but also consider inline code if it is clearly a full `def ...` function.
+      - A candidate must be a `def` function that looks like the solution (not a test harness).
+
+    3) Select exactly one candidate to output:
+      - Highest priority: a function named REQUIRED_ENTRYPOINT with the expected arity/signature.
+      - Otherwise: the most likely solution function by behavior/structure, but you may NOT change its logic.
+      - Avoid candidates that are clearly tests (many `assert`s), `unittest` classes, or scripts.
+
+    4) Sanitize by deletion only:
+      - Remove tests, asserts, prints, example calls, `if __name__ == "__main__":`, and unrelated snippets.
+      - Remove additional alternative implementations (keep only the chosen one).
+      - Keep any necessary helper functions ONLY if they are explicitly present in the same extracted code and are required for the chosen function to run; do not modify them.
+
+    5) Optional rename (ONLY allowed modification):
+      - If the chosen function name is not REQUIRED_ENTRYPOINT:
+        - Rename the function in its `def` line to REQUIRED_ENTRYPOINT.
+        - Update references to the old function name inside that chosen function body (e.g., recursion) to REQUIRED_ENTRYPOINT.
+      - Do NOT rename any other symbols.
+
+    6) Output ONLY the final sanitized code text. No backticks. No explanation.
+
+    Failure behavior:
+    - If you cannot find any plausible solution function in RAW_RESPONSE, output an empty string (no whitespace, no newline).
+
+    PROBLEM_PROMPT:
+    {PROBLEM_PROMPT}
+
+    RAW_RESPONSE:
+    {RAW_RESPONSE}
+
+
+  answer_similarity_judge_prompt_output: |
+    You are an expert in evaluating the similarity of two model code outputs.
+    You will be given a task and two model code outputs.
+    Your task is to determine how similar the two code outputs are.
+
+    Task:
+    ---
+    {task}
+    ---
+
+    Model Code Output 1:
+    ---
+    {model_code_output_1}
+    ---
+
+    Model Code Output 2:
+    ---
+    {model_code_output_2}
+    ---
+
+    Instructions:
+    1. Read the task and the two model code outputs carefully.
+    2. Determine how similar the two code outputs are.
+    3. If the two code outputs are similar, output "similar".
+    4. If the two code outputs are not similar, output "not similar".
+    5. No extra keys, no trailing commas, no markdown fences, no commentary.
+
+    Make sure to output only the string "similar" or "not similar" and nothing else.
+
+personalization_prompts:
+  identify_changes: |
+    You are an expert in personalizing programming tasks.
+
+    Task:
+    Given the following user profile, identify 2–3 concrete, distinct ways to modify a programming problem prompt for each field of the profile.
+    The modifications should instruct how to adapt the prompt's phrasing, tone, and instructions to match the user's persona and preferences, without changing the core programming task.
+    IMPORTANT FIELD RULES:
+    - Only produce entries for these fields (exactly once each), and omit all others:
+      input_dimensions.real_world_context_embedding
+      input_dimensions.persona_based_task_framing
+      output_dimensions.clarity_and_comprehensibility
+      output_dimensions.efficiency
+      output_dimensions.expressive_style
+      persona.description
+      context.real_world_context_embedding
+      context.persona_based_task_framing
+      preferred_output_dimensions
+    - Do NOT produce entries for any *.task_complexity_gradient fields.
+
+    User Profile:
+    ---
+    {user_profile_json}
+    ---
+
+    Output rules (MUST FOLLOW):
+    1) Output must be a single valid JSON object. No explanations, no comments, no markdown fences.
+    2) Root object has exactly one key: "changes_by_field".
+    3) "changes_by_field" must be an array containing ONLY objects (no strings like "", no nulls, no numbers).
+    4) Each object has:
+      - "field": string
+      - "options": array of objects
+    5) Each option object has exactly four string keys: "name", "change", "example", "rationale".
+    6) Keys must be exactly: changes_by_field, field, options, name, change, example, rationale. No extra keys. No trailing commas.
+    7) In "example": do not include newline characters. Avoid using double quotes inside the string.
+
+    Final verification before output:
+    - Every element of changes_by_field starts with opening curly brace and not double quotes.
+    - Output contains no raw newlines inside string values.
+    - Output can be parsed by json.loads as-is.
+
+    Correct Example (with two fields and two options each):
+
+    {{
+      "changes_by_field": [
+        {{
+          "field": "persona_description",
+          "options": [
+            {{
+              "name": "student_friendly_tone",
+              "change": "Use a conversational, student-like tone.",
+              "example": "\\"Hey! Can you walk me through this question?\\"",
+              "rationale": "Matches the user’s beginner status."
+            }},
+            {{
+              "name": "relatable_examples",
+              "change": "Incorporate coursework-related examples.",
+              "example": "\\"# Example: calculating the mean of exam scores.\\"",
+              "rationale": "Connects with the user’s academic context."
+            }}
+          ]
+        }},
+        {{
+          "field": "output_dimensions.clarity_and_comprehensibility",
+          "options": [
+            {{
+              "name": "verbose_comments",
+              "change": "Ask to add comments explaining each line of code.",
+              "example": "\\"Please add comments explaining each line of code.\\"",
+              "rationale": "The user will want high clarity as a beginner."
+            }},
+            {{
+              "name": "explanatory_prints",
+              "change": "Ask to add print statements describing steps.",
+              "example": "\\"Please add print statements describing steps.\\"",
+              "rationale": "The user will want real-time explanations during execution as a beginner."
+            }}
+          ]
+        }}
+      ]
+    }}
+
+    Now, produce the JSON for all fields of the given user profile in exactly this format. Verify the output is a valid JSON object!
+
+  compose_prompt: |
+    You are an expert in rewriting programming tasks as a persona.
+    You will be given an original programming problem prompt and a list of modifications to apply.
+    Your task is to rewrite the prompt to incorporate all the specified changes while ensuring the underlying programming problem remains identical. Note that you are rewriting the prompt as the persona that requires the changes, so don't say it directly, but rather as if you are the persona. Never refer to task_complexity_gradient in any way. Keep it short and human-like as possible.
+
+    Original Prompt:
+    ---
+    {original_prompt}
+    ---
+
+    Modifications to apply:
+    ---
+    {changes_description}
+    ---
+
+    Instructions:
+    1. Carefully read the original prompt and the list of changes.
+    2. Rewrite the prompt to apply all changes cohesively.
+    3. DO NOT alter the core requirements of the programming task. The new prompt must lead to the same solution.
+    4. Ensure the output is a single, complete prompt.
+    5. Do not answer the task or provide a solution to the task. 
+    6. Rewrite the prompt as if you are the persona - always use first person pronouns like "I" and "my", and don't reffer to knowledge the persona doesn't have. 
+    7. Never address the "user" in the prompt - you ARE the user when writing the prompt.
+    8. Never reffer explicitly to external details that the persona doesn't know - nothing in the user profile outside "description", or more advanced programming concepts that the persona doesn't know.
+    9. Never refer to task complexity gradient in any way, don't mention the range, numbers or anything related to it.
+    10. The length should not be longer than 2-4 short sentences.
+    11. Your output MUST only contain the prompt text and nothing else.
+      - No opening words or closing words
+      - No explanations
+      - No markdown fences
+
+    Correct Example for modified_prompt:
+
+    Input sample: "Write a function sum_list(nums) that returns the sum of a list of integers.
+
+    "modified_prompt": "I'm new to Python, please help me with the following question.\n\nWrite a function sum_list(nums) that returns the sum of a list of integers.\n\nRequirements:\n1) Input: a list of integers.\n2) Output: an integer sum.\n\nInstructions:\n- Try to use clear variable names and add brief inline comments.\n- Provide a small example at the end showing input and output."
+  compose_prompt_humaneval_plus: |
+    You are an expert in rewriting programming tasks as a persona.
+    You will be given an original programming problem prompt and a list of modifications to apply.
+    Your task is to write a prefix for the prompt to incorporate all the specified changes while ensuring the underlying programming problem remains identical. Note that you are rewriting the prompt prefix as the persona that requires the changes, so don't say it directly, but rather as if you are the persona. Never refer to task_complexity_gradient in any way. Keep it short and human-like as possible.
+
+    Original Prompt:
+    ---
+    {original_prompt}
+    ---
+
+    Modifications to apply:
+    ---
+    {changes_description}
+    ---
+
+    Instructions:
+    1. Carefully read the original prompt and the list of changes.
+    2. Write the new prefix for the prompt to apply all changes cohesively. The prefix will be added to the original prompt, so it should be a valid prefix for the original prompt (e.g., an LLM will be given the prefix and the original prompt concatenated as input).
+    3. DO NOT alter the core requirements of the programming task. The new prefix must lead to the same solution.
+    4. Ensure the output is a single, complete prefix.
+    5. Do not answer the task or provide a solution to the task. 
+    6. Write the prefix as if you are the persona - always use first person pronouns like "I" and "my", and don't reffer to knowledge the persona doesn't have. 
+    7. Never address the "user" in the prefix - you ARE the user when writing the prefix.
+    8. Never reffer explicitly to external details that the persona doesn't know - nothing in the user profile outside "description", or more advanced programming concepts that the persona doesn't know.
+    9. Never refer to task complexity gradient in any way, don't mention the range, numbers or anything related to it.
+    10. The length should not be longer than 2-4 short sentences.
+    11. Your output MUST only contain the prefix text and nothing else.
+      - No opening words or closing words
+      - No explanations
+      - No markdown fences
+
+    Correct Example for modified_prompt for a Python beginner user:
+
+    Input sample: "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n"
+
+    "modified_prompt": "I'm new to Python, please help me with the following question."
+  verify_prompt: |
+    You are an expert in verifying programming problem statements.
+    You will be given an original prompt and a modified version of it.
+    Your task is to determine if the modified prompt preserves the original's core task and would result in the same ground-truth solution. Note that the modified prompt should perserve the original's task intent, and not to provide a solution or hints to the task.
+
+    Original Prompt:
+    ---
+    {original_prompt}
+    ---
+
+    Modified Prompt:
+    ---
+    {modified_prompt}
+    ---
+
+    Instructions:
+    1. Read both prompts carefully.
+    2. Decide:
+      - "same_end_goal": Is the fundamental task identical in both prompts? Does the modified prompt not provide any hints or solutions to the task? Does the modified prompt not contain text that seems like an assistant wrote it?
+      - "same_ground_truth": Would the correct solution for the original also be correct for the modified?
+    3. Output MUST be a single valid JSON object, nothing else.
+    4. Use exactly these keys: same_end_goal, same_ground_truth, reason_if_failed.
+      - Boolean values must be JSON booleans: true or false (lowercase).
+      - If both booleans are true, set "reason_if_failed" to an empty string "".
+      - If either boolean is false, provide a concise reason in "reason_if_failed".
+    5. No extra keys, no trailing commas, no markdown fences, no commentary.
+
+    Correct Format Examples:
+
+    # Pass case (both true)
+    {{
+      "same_end_goal": true,
+      "same_ground_truth": true,
+      "reason_if_failed": ""
+    }}
+
+    # Fail case (end goal differs)
+    {{
+      "same_end_goal": false,
+      "same_ground_truth": false,
+      "reason_if_failed": "Modified prompt contains hints or solutions to the task, so the original correct solution would fail."
+    }}
+
+    # Fail case (ground truth differs)
+    {{
+      "same_end_goal": true,
+      "same_ground_truth": false,
+      "reason_if_failed": "Modified prompt changes input format, so the original correct solution would fail."
+    }}
+
+    Now, produce the JSON for the given original and modified prompts in exactly this format.

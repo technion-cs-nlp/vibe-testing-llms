@@ -1,0 +1,26 @@
+user_id: "ai_researcher_02"
+description: "I am a researcher in the field of machine learning. I need code that is efficient and easy to modify and trace."
+persona_description: "A researcher in the field of machine learning focused on clarity and easy modification."
+
+# Input-oriented dimensions
+input_dimensions:
+  task_complexity_gradient: [0.4, 0.8] # Focus on moderate-to-complex tasks
+  real_world_context_embedding: "academic research"
+  persona_based_task_framing: "researcher" # The model should act like a helpful researcher
+  preference_and_underspecification_handling:
+    default_behavior: "ask 1-2 targeted questions only when requirements impact reproducibility or correctness; otherwise proceed with explicit assumptions and provide a modular, traceable solution"
+    desired_clarification_style: "short questions that surface key constraints (data shape, metrics, compute budget, reproducibility) + a default recommendation"
+
+# Output-oriented dimensions
+output_dimensions:
+  clarity_and_comprehensibility: 4 # (Scale 1-5, 5 is most important)
+  workflow_fit: 4
+  plus_correctness: 4
+  correctness: 5 # Used only when correctness gating is not applied
+  friction_and_frustration: 4
+  reliability: 5
+  persona_consistency_and_context_awareness: 4
+  safety_and_refusal_behavior: 3
+  anthropomorphism: 1
+  creativity_and_originality: 2
+  expressive_style: "clear, concise, and technical; emphasizes reproducibility, traceability, and easy-to-modify structure; includes brief rationale for key design choices"

@@ -1,0 +1,26 @@
+user_id: "advanced_developer_01"
+description: "I am an experienced programmer and I often work on optimization and complex debugging. I prefer efficient solutions with minimal guidance and concise outputs."
+persona_description: "An advanced developer who wants direct, high-signal answers optimized for speed and control."
+
+# Input-oriented dimensions
+input_dimensions:
+  task_complexity_gradient: [0.65, 0.98] # Focus on complex tasks
+  real_world_context_embedding: "performance-sensitive development, complex debugging, and system-level optimization"
+  persona_based_task_framing: "senior peer" # The model should act like a senior peer
+  preference_and_underspecification_handling:
+    default_behavior: "avoid questions unless blocked; proceed with explicit assumptions and offer quick alternatives"
+    desired_clarification_style: "one-line assumptions + optional follow-up questions only if necessary"
+
+# Output-oriented dimensions
+output_dimensions:
+  clarity_and_comprehensibility: 3 # (Scale 1-5, 5 is most important)
+  workflow_fit: 5
+  plus_correctness: 5
+  correctness: 5 # Used only when correctness gating is not applied
+  friction_and_frustration: 5
+  reliability: 4
+  persona_consistency_and_context_awareness: 4
+  safety_and_refusal_behavior: 3
+  anthropomorphism: 1
+  creativity_and_originality: 4
+  expressive_style: "concise and technical; prioritizes actionable steps, edge cases, and performance notes; minimal narration"

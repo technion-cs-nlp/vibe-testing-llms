@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>From Feelings to Metrics | Vibe-Testing Project Page</title>
+<meta
+  name="description"
+  content="Project page for From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs, a paper that empirically studies vibe-testing, formalizes it, and proposes an evaluation pipeline for coding tasks."
+/>
+<meta
+  name="keywords"
+  content="vibe-testing, LLM evaluation, coding benchmarks, personalized evaluation, subjective evaluation, pairwise comparison, NLP, ML"
+/>
+<meta name="author" content="Itay Itzhak, Eliya Habba, Gabriel Stanovsky, Yonatan Belinkov" />
+<meta property="og:title" content="From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs" />
+<meta
+  property="og:description"
+  content="A project page for a paper on empirically studying vibe-testing, formalizing it, and proposing a user-centered evaluation pipeline for coding tasks."
+/>
+<meta property="og:type" content="website" />
+<meta property="og:url" content="./index.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+<style>
+  :root {
+    --page-bg: #f6f7fb;
+    --section-bg: #ffffff;
+    --ink: #172033;
+    --muted: #5c6478;
+    --border: #dbe1ec;
+    --accent: #2850d8;
+    --accent-soft: #edf2ff;
+    --accent-2: #12816f;
+    --accent-3: #8f5cff;
+    --shadow: 0 16px 48px rgba(12, 24, 56, 0.08);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: linear-gradient(180deg, #eef2fb 0%, var(--page-bg) 18%, var(--page-bg) 100%);
+    color: var(--ink);
+    font-family: "Noto Sans", sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    padding: 1.5rem;
+  }
+
+  a {
+    color: var(--accent);
+  }
+
+  .site-shell {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .hero {
+    background:
+      radial-gradient(circle at top left, rgba(40, 80, 216, 0.16), transparent 34%),
+      radial-gradient(circle at top right, rgba(143, 92, 255, 0.14), transparent 28%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(244, 247, 255, 0.97));
+    border: 1px solid rgba(219, 225, 236, 0.9);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .hero-body {
+    padding: 3.5rem 2.75rem;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: rgba(40, 80, 216, 0.08);
+    border: 1px solid rgba(40, 80, 216, 0.14);
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    padding: 0.5rem 0.9rem;
+    margin-bottom: 1.15rem;
+  }
+
+  .hero .title {
+    color: var(--ink);
+    font-family: "Google Sans", sans-serif;
+    font-size: clamp(2.3rem, 5vw, 3.7rem);
+    line-height: 1.08;
+    margin-bottom: 1rem;
+  }
+
+  .subtitle-text {
+    display: block;
+    color: var(--muted);
+    font-family: "Castoro", serif;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    line-height: 1.45;
+    margin-top: 0.85rem;
+  }
+
+  .hero-copy {
+    color: #253149;
+    font-size: 1.08rem;
+    max-width: 860px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .hero-meta {
+    color: var(--muted);
+    font-size: 0.98rem;
+    margin-top: 1rem;
+  }
+
+  .hero-authors {
+    color: #253149;
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+
+  .hero-affiliations {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-top: 0.35rem;
+  }
+
+  .buttons.is-centered {
+    justify-content: center;
+  }
+
+  .button.is-dark.is-rounded,
+  .button.is-link.is-light {
+    border-radius: 999px;
+    font-weight: 700;
+    min-width: 10.5rem;
+  }
+
+  .button.is-dark.is-rounded {
+    background: linear-gradient(135deg, #16233d, #2a3d6b);
+  }
+
+  .button.is-link.is-light {
+    background: var(--accent-soft);
+    border: 1px solid rgba(40, 80, 216, 0.12);
+    color: var(--accent);
+  }
+
+  .hero-stats {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    margin-top: 2rem;
+  }
+
+  .stat-chip {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1rem 1.1rem;
+    text-align: left;
+  }
+
+  .stat-chip strong {
+    display: block;
+    color: var(--ink);
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .stat-chip span {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  section.section {
+    background: var(--section-bg);
+    border: 1px solid rgba(219, 225, 236, 0.92);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    padding: 2.35rem;
+  }
+
+  h2.title.is-3,
+  h3.title.is-4 {
+    color: var(--ink);
+    font-family: "Google Sans", sans-serif;
+    margin-bottom: 1rem;
+  }
+
+  .section-lead {
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(40, 80, 216, 0.08), rgba(18, 129, 111, 0.08));
+    border-left: 5px solid var(--accent);
+    border-radius: 16px;
+    padding: 1.25rem 1.35rem;
+  }
+
+  .columns.is-variable.is-6 {
+    --columnGap: 1.5rem;
+  }
+
+  .content ul {
+    margin-top: 0.75rem;
+  }
+
+  .content li {
+    margin-bottom: 0.55rem;
+  }
+
+  .framework-grid,
+  .feature-grid,
+  .capability-grid,
+  .step-grid {
+    display: grid;
+    gap: 1.15rem;
+  }
+
+  .framework-grid,
+  .feature-grid,
+  .capability-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .step-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .step-grid.pipeline-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .info-card,
+  .step-card {
+    background: linear-gradient(180deg, rgba(248, 250, 255, 0.98), rgba(255, 255, 255, 0.98));
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.25rem 1.2rem;
+    height: 100%;
+  }
+
+  .info-card h3,
+  .step-card h3 {
+    color: var(--ink);
+    font-family: "Google Sans", sans-serif;
+    font-size: 1.12rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .info-card p,
+  .step-card p,
+  .info-card li {
+    color: #344055;
+    font-size: 0.98rem;
+  }
+
+  .card-kicker {
+    color: var(--accent);
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-number {
+    align-items: center;
+    background: var(--accent-soft);
+    border-radius: 999px;
+    color: var(--accent);
+    display: inline-flex;
+    font-size: 0.88rem;
+    font-weight: 700;
+    height: 2rem;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    width: 2rem;
+  }
+
+  .step-number.pipeline-letter {
+    font-size: 1rem;
+    height: 2.3rem;
+    width: 2.3rem;
+  }
+
+  .abstract-box {
+    background: #fafbfe;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.35rem 1.45rem;
+  }
+
+  .code-block,
+  pre.bibtex-box {
+    background: #111827;
+    border-radius: 18px;
+    color: #eff3ff;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.94rem;
+    overflow-x: auto;
+    padding: 1.2rem 1.3rem;
+  }
+
+  .command-label {
+    color: var(--ink);
+    font-family: "Google Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.65rem;
+  }
+
+  .resource-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+
+  .resource-pill {
+    background: #f5f7fc;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: #344055;
+    font-size: 0.93rem;
+    padding: 0.55rem 0.9rem;
+  }
+
+  .figure-slot {
+    background: linear-gradient(180deg, #fbfcff, #f4f7ff);
+    border: 1px dashed #b7c5e4;
+    border-radius: 20px;
+    margin-top: 1.5rem;
+    padding: 1.35rem;
+  }
+
+  .figure-label {
+    color: var(--accent);
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.65rem;
+  }
+
+  .figure-box {
+    align-items: center;
+    background:
+      linear-gradient(135deg, rgba(40, 80, 216, 0.07), rgba(143, 92, 255, 0.05)),
+      #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    color: #4a566e;
+    display: flex;
+    font-size: 1rem;
+    justify-content: center;
+    min-height: 220px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .figure-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  .figure-grid.two-up {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .figure-image-wrapper {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 0.85rem;
+  }
+
+  .figure-image {
+    border-radius: 12px;
+    display: block;
+    height: auto;
+    width: 100%;
+  }
+
+  .figure-caption {
+    color: var(--muted);
+    font-size: 0.94rem;
+    margin-top: 0.8rem;
+  }
+
+  .small-note {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin-top: 0.85rem;
+  }
+
+  .footer {
+    background: transparent;
+    padding: 1rem 0 0;
+  }
+
+  .footer .content {
+    color: var(--muted);
+    font-size: 0.94rem;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    body {
+      padding: 1rem;
+    }
+
+    .hero-body,
+    section.section {
+      padding: 1.6rem;
+    }
+
+    .button.is-dark.is-rounded,
+    .button.is-link.is-light {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .figure-grid.two-up {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "name": "From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Itay Itzhak"
+    },
+    {
+      "@type": "Person",
+      "name": "Eliya Habba"
+    },
+    {
+      "@type": "Person",
+      "name": "Gabriel Stanovsky"
+    },
+    {
+      "@type": "Person",
+      "name": "Yonatan Belinkov"
+    }
+  ],
+  "datePublished": "2026",
+  "url": "../Vibe_Testing__COLM_(14).pdf",
+  "description": "A project page for a paper on empirically studying vibe-testing, formalizing it, and proposing a user-centered evaluation pipeline for coding tasks."
+}
+</script>
+</head>
+<body>
+<div class="site-shell">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <div class="status-pill">
+          <span class="icon is-small"><i class="fas fa-compass"></i></span>
+          <span>Paper Webpage</span>
+        </div>
+        <h1 class="title">
+          From Feelings to Metrics:
+          <span class="subtitle-text">Understanding and Formalizing How Users VIBE-TEST LLMs</span>
+        </h1>
+        <div class="buttons is-centered mt-4">
+          <a class="button is-dark is-rounded" href="https://arxiv.org/abs/XXXX.XXXXX">
+            <span class="icon"><i class="ai ai-arxiv"></i></span>
+            <span>Paper</span>
+          </a>
+          <a class="button is-link is-light" href="#">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>GitHub</span>
+          </a>
+          <a class="button is-link is-light" href="#citation">
+            <span class="icon"><i class="fas fa-quote-right"></i></span>
+            <span>Citation</span>
+          </a>
+        </div>
+        <p class="hero-authors">
+          <strong><a href="https://itay1itzhak.github.io/" target="_blank">Itay Itzhak</a></strong><sup>1,2</sup> &middot; <a href="https://eliyahabba.github.io/" target="_blank">Eliya Habba</a><sup>2</sup>  &middot; <a href="https://gabrielstanovsky.github.io/" target="_blank">Gabriel Stanovsky</a><sup>2</sup> &middot; <a href="https://belinkov.com/" target="_blank">Yonatan Belinkov</a><sup>1</sup>
+        </p>
+        <p class="hero-affiliations">
+          <sup>1</sup>Technion -- Israel Institute of Technology &middot; <sup>2</sup>The Hebrew University of Jerusalem
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="figure-1">
+    <div class="figure-slot">
+      <div class="figure-label">Figure 1</div>
+      <div class="figure-grid">
+        <div class="figure-image-wrapper">
+          <img
+            class="figure-image"
+            src="static/vibe-testing%20figure%201_page-0001.jpg"
+            alt="Figure 1 from the paper showing an example vibe-test."
+          />
+        </div>
+      </div>
+      <p class="figure-caption">
+        An example vibe-test illustrating how users compare models on a concrete task and
+        judge outputs using personal, workflow-relevant criteria.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="overview">
+    <h2 class="title is-3">TL;DR</h2>
+    <div class="highlight-box">
+      <p>
+        Benchmark leaderboards are useful, but they often miss what matters during real use,
+        so users turn to <strong>vibe-testing</strong>: manual workflow-based model comparison.
+        In this work, we empirically study how vibe-testing happens <strong>in practice</strong>, formalize it
+        as a two-part evaluation process, and propose a user-centered evaluation pipeline based on that formalization.
+        The experiments show that personalizing both the prompt and the judgment criteria can
+        change which model is preferred, laying the groundwork for more user-centered model
+        evaluation.
+      </p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-chip">
+        <strong>Empirical grounding</strong>
+        <span>Built from a user survey and in-the-wild comparison reports that show how people actually vibe-test models.</span>
+      </div>
+      <div class="stat-chip">
+        <strong>Two-part formalization</strong>
+        <span>Vibe-testing is formalized through input dimensions for what users test and output dimensions for how they judge.</span>
+      </div>
+      <div class="stat-chip">
+        <strong>Evaluation pipeline</strong>
+        <span>The paper proposes a modular pipeline that personalizes prompts and compares model outputs using user-aware criteria.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="abstract">
+    <h2 class="title is-3">Abstract</h2>
+    <div class="abstract-box">
+      <p>
+        Evaluating LLMs is challenging because benchmark scores often fail to capture models'
+        real-world usefulness. Users therefore rely on vibe-testing: informal, experience-based
+        comparisons on tasks that resemble their own workflows. This project studies how
+        vibe-testing works in practice, formalizes it as a two-part process over input and output
+        dimensions, and introduces a proof-of-concept evaluation pipeline for coding tasks. The
+        pipeline personalizes prompts, runs head-to-head model comparisons, and judges responses
+        using user-aware subjective criteria. Experiments on coding benchmarks show that when
+        both prompt framing and response judgment are personalized, the preferred model can
+        change relative to the original benchmark setting.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="motivation">
+    <div class="columns is-variable is-6">
+      <div class="column">
+        <h2 class="title is-3">Why Benchmarks Miss Vibe</h2>
+        <p class="section-lead">
+          The paper starts from the gap between benchmark rankings and what users actually
+          notice when working with models.
+        </p>
+        <div class="content">
+          <ul>
+            <li>Benchmark scores compress model behavior into a small number of standardized metrics.</li>
+            <li>In practice, users care about qualities such as clarity, ambiguity handling, style fit, trust, and workflow compatibility.</li>
+            <li>Those qualities are often tested through personalized prompts and judged qualitatively from the user's own perspective.</li>
+            <li>As a result, practical model comparisons are informative but difficult to reproduce, compare, or analyze at scale.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="column">
+        <h2 class="title is-3">What The Paper Studies</h2>
+        <p class="section-lead">
+          To understand vibe-testing as a real-world evaluation practice, the paper first
+          examines it empirically before proposing structure and automation.
+        </p>
+        <div class="content">
+          <ul>
+            <li>A survey of user evaluation practices identifies what people think benchmarks fail to capture and how they test models instead.</li>
+            <li>An in-the-wild corpus of model comparison reports from blogs, forums, tech articles, and social media reveals recurring testing and judging patterns.</li>
+            <li>Together, these sources motivate a formal framework and a downstream evaluation pipeline for systematic study.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="figure-slot">
+      <div class="figure-label">Figure 2</div>
+      <div class="figure-grid two-up">
+        <div class="figure-image-wrapper">
+          <img
+            class="figure-image"
+            src="static/figure_1_benchmark_failures_page-0001.jpg"
+            alt="Figure 2 left panel showing what benchmarks fail to measure."
+          />
+        </div>
+        <div class="figure-image-wrapper">
+          <img
+            class="figure-image"
+            src="static/figure_2_vibe_methods_page-0001.jpg"
+            alt="Figure 2 right panel showing common vibe-testing methods."
+          />
+        </div>
+      </div>
+      <p class="figure-caption">
+        Survey results showing what users think benchmarks miss and the methods they use when
+        vibe-testing models in practice.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="framework">
+    <h2 class="title is-3">Formalizing Vibe-Testing</h2>
+    <p class="section-lead">
+      The paper frames vibe-testing as a two-part process: users personalize what they test,
+      and they personalize how they judge model outputs.
+    </p>
+    <div class="framework-grid">
+      <div class="info-card">
+        <div class="card-kicker">Input Dimensions</div>
+        <h3>What users test</h3>
+        <p>
+          Input dimensions describe how prompts are shaped to reflect a user's context. In the
+          coding setting, this includes task framing, real-world workflow details, the amount of
+          context supplied, and the type of constraints the user cares about.
+        </p>
+      </div>
+      <div class="info-card">
+        <div class="card-kicker">Output Dimensions</div>
+        <h3>How users judge responses</h3>
+        <p>
+          Output dimensions describe what makes a response feel useful from the user's
+          perspective, such as clarity, style fit, workflow fit, ambiguity handling, and other
+          subjective properties that are rarely captured by standard benchmarks.
+        </p>
+      </div>
+    </div>
+    <div class="highlight-box mt-5">
+      <p>
+        This formalization turns vibe-testing into something reproducible: it separates how
+        users shape test inputs from how they interpret outputs, creating the basis for a
+        modular evaluation pipeline rather than an ad hoc comparison habit.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="pipeline">
+    <h2 class="title is-3">Pipeline Overview</h2>
+    <p class="section-lead">
+      Figure 3 in the paper presents the pipeline as three connected parts. The implementation
+      in this repository expands each part into modular scripts and analysis stages, but the
+      public-facing overview is best understood through the paper's A / B / C structure.
+    </p>
+    <div class="step-grid pipeline-grid">
+      <div class="step-card">
+        <div class="step-number pipeline-letter">A</div>
+        <h3>User profiling</h3>
+        <p>
+          Convert a short natural-language user description into a structured profile that
+          captures both input preferences and output preferences.
+        </p>
+      </div>
+      <div class="step-card">
+        <div class="step-number pipeline-letter">B</div>
+        <h3>Vibe dataset construction</h3>
+        <p>
+          Rewrite benchmark prompts into personalized variants aligned with the user's input
+          dimensions, while checking that the task intent and ground truth are preserved.
+        </p>
+      </div>
+      <div class="step-card">
+        <div class="step-number pipeline-letter">C</div>
+        <h3>Model comparison</h3>
+        <p>
+          Evaluate correctness and compare two model outputs head to head using the user's
+          output dimensions, producing per-dimension and overall preference signals.
+        </p>
+      </div>
+    </div>
+    <div class="figure-slot">
+      <div class="figure-label">Figure 3</div>
+      <div class="figure-grid">
+        <div class="figure-image-wrapper">
+          <img
+            class="figure-image"
+            src="static/pipeline_page-0001.jpg"
+            alt="Figure 3 showing the automatic vibe-testing pipeline."
+          />
+        </div>
+      </div>
+      <p class="figure-caption">
+        The automatic vibe-testing pipeline: user profiling, vibe dataset construction, and
+        model comparison in one A/B/C workflow.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="results">
+    <h2 class="title is-3">Head-to-Head Results</h2>
+    <p class="section-lead">
+      The paper's central experimental claim is not only that personalization matters, but
+      that it can materially change preference orderings between models.
+    </p>
+    <div class="content">
+      <ul>
+        <li>Personalized prompts and user-aware judgment can reverse which model is preferred in head-to-head evaluations.</li>
+        <li>Neutral control paraphrases mostly preserve the ordering seen under original benchmark prompts.</li>
+        <li>This suggests that benchmark prompts can mask user-relevant differences in clarity, style, workflow fit, and related subjective dimensions.</li>
+      </ul>
+    </div>
+    <div class="figure-slot">
+      <div class="figure-label">Figure 4</div>
+      <div class="figure-grid two-up">
+        <div class="figure-image-wrapper">
+          <img
+            class="figure-image"
+            src="static/pairwise_dimension_comparison_with_objective_original_page-0001.jpg"
+            alt="Figure 4 left panel showing head-to-head results on original prompts."
+          />
+        </div>
+        <div class="figure-image-wrapper">
+          <img
+            class="figure-image"
+            src="static/pairwise_dimension_comparison_with_objective_personlized_page-0001.jpg"
+            alt="Figure 4 right panel showing head-to-head results on personalized prompts."
+          />
+        </div>
+      </div>
+      <p class="figure-caption">
+        Head-to-head comparison results under original and personalized prompts, showing how
+        personalization can shift model preferences across subjective dimensions.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="contributions">
+    <h2 class="title is-3">Key Contributions</h2>
+    <div class="feature-grid">
+      <div class="info-card">
+        <div class="card-kicker">Empirical Study</div>
+        <h3>Grounding in real user behavior</h3>
+        <p>
+          The work studies vibe-testing through a survey of user practices and a corpus of
+          real-world comparison reports, rather than treating personalized evaluation as a purely
+          speculative idea.
+        </p>
+      </div>
+      <div class="info-card">
+        <div class="card-kicker">Formalization</div>
+        <h3>A structure for reproducibility</h3>
+        <p>
+          Vibe-testing is decomposed into reusable input dimensions and output dimensions,
+          making informal model comparison easier to analyze and reproduce systematically.
+        </p>
+      </div>
+      <div class="info-card">
+        <div class="card-kicker">Automation</div>
+        <h3>A full evaluation pipeline</h3>
+        <p>
+          The paper proposes a modular pipeline that personalizes prompts, compares models
+          head to head, and turns user-aware evaluation into a reproducible research setup.
+        </p>
+      </div>
+      <div class="info-card">
+        <div class="card-kicker">Finding</div>
+        <h3>Preferences can flip under personalization</h3>
+        <p>
+          In coding benchmark experiments, tailoring both prompt framing and judgment
+          criteria can change which model is preferred, while control paraphrases mostly
+          preserve the original ordering.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="related-work">
+    <h2 class="title is-3">Related Work</h2>
+    <div class="content">
+      <p>
+        Recent work has moved toward more qualitative and user-centered LLM evaluation, but
+        usually captures only part of what this paper studies. <a href="https://arxiv.org/abs/2410.12851" target="_blank">VibeCheck: Discover and Quantify Qualitative Differences in Large Language Models</a>
+        (Dunlap et al., 2024) and <a href="https://arxiv.org/abs/2510.07315" target="_blank">Vibe Checker: Aligning Code Evaluation with Human Preference</a>
+        (Zhong et al., 2025) are especially relevant for vibe-oriented and coding-focused
+        evaluation, but they do not center the empirical study of vibe-testing as a user
+        practice. <a href="https://crfm.stanford.edu/2024/02/18/helm-instruct.html" target="_blank">HELM Instruct</a>
+        (Zhang et al., 2024) and <a href="https://aclanthology.org/2025.acl-long.1262/" target="_blank">ChatBench: From Static Benchmarks to Human-AI Evaluation</a>
+        (Chang et al., 2025) highlight the limits of static benchmarks and predefined criteria,
+        while user-focused methods such as <a href="https://arxiv.org/abs/2309.13633" target="_blank">EvalLM</a>
+        (Kim et al., 2024), <a href="https://arxiv.org/abs/2408.13545" target="_blank">IQA-Eval</a>
+        (Li et al., 2024), and <a href="https://arxiv.org/abs/2504.15219" target="_blank">EVALAGENT</a>
+        (Wadhwa et al., 2025) personalize parts of the evaluation process without grounding the
+        framework in an empirical account of how users actually compare models. The difference
+        here is the combination of empirical analysis, formalization, and a pipeline built
+        directly from that observed practice.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="citation">
+    <h2 class="title is-3">Citation</h2>
+    <pre class="bibtex-box">@misc{itzhak2026feelingsmetrics,
+  title        = {From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs},
+  author       = {Itay Itzhak and Eliya Habba and Gabriel Stanovsky and Yonatan Belinkov},
+  year         = {2026},
+  howpublished = {\url{https://arxiv.org/abs/XXXX.XXXXX}}
+}</pre>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              This website is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" rel="license" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

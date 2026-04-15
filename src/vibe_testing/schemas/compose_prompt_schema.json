@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ComposePromptOutput",
+  "type": "object",
+  "properties": {
+    "modified_prompt": {
+      "type": "string",
+      "description": "The full, rewritten prompt text."
+    }
+  },
+  "required": ["modified_prompt"]
+}

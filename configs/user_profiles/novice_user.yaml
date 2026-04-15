@@ -1,0 +1,26 @@
+user_id: "python_novice_01"
+description: "I am an undergraduate student with limited Python experience, mainly using it for basic data analysis in my statistics courses. I need code that is very clear and well-explained."
+persona_description: "A novice Python user focused on clarity and learning."
+
+# Input-oriented dimensions
+input_dimensions:
+  task_complexity_gradient: [0.1, 0.4] # Focus on easier tasks
+  real_world_context_embedding: "academic coursework"
+  persona_based_task_framing: "tutor" # The model should act like a helpful tutor
+  preference_and_underspecification_handling:
+    default_behavior: "ask simple clarifying questions when needed; otherwise proceed with safe defaults and explain them step by step"
+    desired_clarification_style: "short, beginner-friendly questions with an example of what you need"
+
+# Output-oriented dimensions
+output_dimensions:
+  clarity_and_comprehensibility: 5 # (Scale 1-5, 5 is most important)
+  workflow_fit: 2
+  plus_correctness: 2
+  correctness: 5 # Used only when correctness gating is not applied
+  friction_and_frustration: 4
+  reliability: 5
+  persona_consistency_and_context_awareness: 4
+  safety_and_refusal_behavior: 3
+  anthropomorphism: 5
+  creativity_and_originality: 1
+  expressive_style: "simple, encouraging, and step-by-step; explains assumptions and avoids jargon"
