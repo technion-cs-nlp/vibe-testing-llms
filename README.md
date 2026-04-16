@@ -2,7 +2,7 @@
 
 _Understanding and Formalizing How Users VIBE-TEST LLMs._
 
-[![Paper](https://img.shields.io/badge/arXiv-paper-red)](https://arxiv.org/abs/XXXX.XXXXX)
+[![Paper](https://img.shields.io/badge/arXiv-paper-red)](https://arxiv.org/abs/2604.14137)
 [![Website](https://img.shields.io/badge/website-project-blue)](https://itay1itzhak.github.io/vibe-testing-llms)
 [![Contact](https://img.shields.io/badge/contact-email-green)](mailto:itay1itzhak@gmail.com)
 [![Pipeline_Docs](https://img.shields.io/badge/docs-scripts-green)](scripts/README.md)
@@ -164,8 +164,8 @@ python scripts/run_experiment.py configs/experiments/example_experiment.yaml --s
 
 ## 🔗 Resources
 
-- **Paper**: [arXiv placeholder](https://arxiv.org/abs/XXXX.XXXXX)
-- **Project website**: [project website placeholder](https://example.com/vibe-testing-project)
+- **Paper**: [arXiv](https://arxiv.org/abs/2604.14137)
+- **Project website**: [project website](https://itay1itzhak.github.io/vibe-testing-llms)
 - **Experiment orchestrator docs**: `scripts/README.md`
 - **Example experiment config**: `configs/experiments/example_experiment.yaml`
 - **Project page source**: `website/index.html`
@@ -182,7 +182,7 @@ The public paper URL is still a placeholder, so the citation below is set up to 
   author       = {Itzhak Itay, Eliya Habba, Gabriel Stanosky, Yonatan Belinkov},
   year         = {2026},
   note         = {Under review},
-  url          = {https://arxiv.org/abs/XXXX.XXXXX}
+  url          = {https://arxiv.org/abs/2604.14137}
 }
 ```
 
