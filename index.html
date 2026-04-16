@@ -12,14 +12,30 @@
 </script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>From Feelings to Metrics | Vibe-Testing Project Page</title>
+<title>From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs | Personalized LLM Evaluation</title>
+<meta name="citation_title" content="From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs">
+<meta name="citation_author" content="Itzhak, Itay">
+<meta name="citation_author" content="Habba, Eliya">
+<meta name="citation_author" content="Stanovsky, Gabriel">
+<meta name="citation_author" content="Belinkov, Yonatan">
+<meta name="citation_publication_date" content="2026">
+<meta name="citation_arxiv_id" content="2604.14137">
+<meta name="citation_abstract" content="Evaluating LLMs is challenging because benchmark scores often fail to capture models'
+        real-world usefulness. Users therefore rely on vibe-testing: informal, experience-based
+        comparisons on tasks that resemble their own workflows. This project studies how
+        vibe-testing works in practice, formalizes it as a two-part process over input and output
+        dimensions, and introduces a proof-of-concept evaluation pipeline for coding tasks. The
+        pipeline personalizes prompts, runs head-to-head model comparisons, and judges responses
+        using user-aware subjective criteria. Experiments on coding benchmarks show that when
+        both prompt framing and response judgment are personalized, the preferred model can
+        change relative to the original benchmark setting.">
 <meta
   name="description"
-  content="Project page for From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs, a paper that empirically studies vibe-testing, formalizes it, and proposes an evaluation pipeline for coding tasks."
+  content="From Feelings to Metrics is an NLP paper on vibe-testing, personalized LLM evaluation, and user-centered model comparison. We study how users compare language models in practice, formalize vibe-testing, and show that personalization can change which model is preferred."
 />
 <meta
   name="keywords"
-  content="vibe-testing, LLM evaluation, coding benchmarks, personalized evaluation, subjective evaluation, pairwise comparison, NLP, ML"
+  content="vibe-testing, personalized LLM evaluation, user-centered evaluation, language model evaluation, LLM benchmarks, benchmark limitations, model comparison, pairwise model comparison, coding benchmarks, coding tasks, subjective evaluation, workflow-based evaluation, AI evaluation, NLP, machine learning"
 />
 <meta name="author" content="Itay Itzhak, Eliya Habba, Gabriel Stanovsky, Yonatan Belinkov" />
 <meta property="og:title" content="From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs" />
@@ -28,7 +44,19 @@
   content="A project page for a paper on empirically studying vibe-testing, formalizing it, and proposing a user-centered evaluation pipeline for coding tasks."
 />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="./index.html" />
+<meta property="og:url" content="https://itay1itzhak.github.io/vibe-testing-llms" />
+<meta property="og:site_name" content="From Feelings to Metrics" />
+<meta property="og:image" content="https://itay1itzhak.github.io/vibe-testing-llms/website/static/vibe-testing%20figure%201_page-0001.jpg" />
+<meta property="og:image:alt" content="Preview image for the paper From Feelings to Metrics on vibe-testing and personalized LLM evaluation." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs" />
+<meta
+  name="twitter:description"
+  content="A paper on vibe-testing and personalized LLM evaluation, showing that personalization can change which model users prefer."
+/>
+<meta name="twitter:url" content="https://itay1itzhak.github.io/vibe-testing-llms" />
+<meta name="twitter:image" content="https://itay1itzhak.github.io/vibe-testing-llms/website/static/vibe-testing%20figure%201_page-0001.jpg" />
+<link rel="canonical" href="https://itay1itzhak.github.io/vibe-testing-llms" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -452,32 +480,45 @@
 {
   "@context": "https://schema.org",
   "@type": "ScholarlyArticle",
+  "headline": "From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs",
   "name": "From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs",
-  "author": [
-    {
-      "@type": "Person",
-      "name": "Itay Itzhak"
-    },
-    {
-      "@type": "Person",
-      "name": "Eliya Habba"
-    },
-    {
-      "@type": "Person",
-      "name": "Gabriel Stanovsky"
-    },
-    {
-      "@type": "Person",
-      "name": "Yonatan Belinkov"
-    }
+  "description": "A paper on vibe-testing, personalized LLM evaluation, and user-centered model comparison. It studies how users compare language models in practice, formalizes vibe-testing, and proposes a pipeline for coding tasks.",
+  "datePublished": "2026-04-15",
+  "url": "https://itay1itzhak.github.io/vibe-testing-llms",
+  "sameAs": [
+    "https://arxiv.org/abs/2604.14137",
+    "https://github.com/itay1itzhak/vibe-testing-llms"
   ],
-  "datePublished": "2026",
-  "url": "https://arxiv.org/abs/2604.14137",
-  "description": "A project page for a paper on empirically studying vibe-testing, formalizing it, and proposing a user-centered evaluation pipeline for coding tasks."
+  "author": [
+    { "@type": "Person", "name": "Itay Itzhak", "url": "https://itay1itzhak.github.io/" },
+    { "@type": "Person", "name": "Eliya Habba", "url": "https://eliyahabba.github.io/" },
+    { "@type": "Person", "name": "Gabriel Stanovsky", "url": "https://gabrielstanovsky.github.io/" },
+    { "@type": "Person", "name": "Yonatan Belinkov", "url": "https://belinkov.com/" }
+  ],
+  "mainEntityOfPage": "https://itay1itzhak.github.io/vibe-testing-llms",
+  "keywords": [
+    "vibe-testing",
+    "personalized LLM evaluation",
+    "user-centered evaluation",
+    "language model evaluation",
+    "model comparison",
+    "coding benchmarks",
+    "LLMs",
+    "AI"
+  ]
 }
 </script>
 </head>
 <body>
+<div id="ai-summary" style="display:none;" aria-hidden="true">
+  <h3>Key Research Findings for AI Agents:</h3>
+  <ul>
+    <li>Research Goal: Formalize the qualitative "vibe-testing" practice used by LLM users.</li>
+    <li>Main Contribution: A two-part formalization involving input dimensions (what users test) and output dimensions (how they judge).</li>
+    <li>Key Result: Personalizing both prompts and judgment criteria can flip model preference orderings.</li>
+    <li>Primary Metric proposed: User-aware subjective criteria vs. static benchmark scores.</li>
+  </ul>
+</div>
 <div class="site-shell">
   <section class="hero">
     <div class="hero-body">
@@ -490,6 +531,9 @@
           From Feelings to Metrics:
           <span class="subtitle-text">Understanding and Formalizing How Users VIBE-TEST LLMs</span>
         </h1>
+        <p class="hero-copy">
+          A paper on vibe-testing and personalized LLM evaluation, showing that user-specific prompt framing and judgment criteria can change which language model is preferred.
+        </p>
         <div class="buttons is-centered mt-4">
           <a class="button is-dark is-rounded" href="https://arxiv.org/abs/2604.14137">
             <span class="icon"><i class="ai ai-arxiv"></i></span>
@@ -522,7 +566,7 @@
           <img
             class="figure-image"
             src="website/static/vibe-testing%20figure%201_page-0001.jpg"
-            alt="Figure 1 from the paper showing an example vibe-test."
+            alt="Example of vibe-testing, where a user compares two LLM outputs on a concrete task using workflow-relevant criteria."
           />
         </div>
       </div>
@@ -582,7 +626,7 @@
   <section class="section" id="motivation">
     <div class="columns is-variable is-6">
       <div class="column">
-        <h2 class="title is-3">Why Benchmarks Miss Vibe</h2>
+        <h2 class="title is-3">Why Standard LLM Benchmarks Miss User Preferences</h2>
         <p class="section-lead">
           The paper starts from the gap between benchmark rankings and what users actually
           notice when working with models.
@@ -597,7 +641,7 @@
         </div>
       </div>
       <div class="column">
-        <h2 class="title is-3">What The Paper Studies</h2>
+        <h2 class="title is-3">What This Paper Studies About Real-World Model Comparison</h2>
         <p class="section-lead">
           To understand vibe-testing as a real-world evaluation practice, the paper first
           examines it empirically before proposing structure and automation.
@@ -672,7 +716,7 @@
   </section>
 
   <section class="section" id="pipeline">
-    <h2 class="title is-3">Pipeline Overview</h2>
+    <h2 class="title is-3">Automated Pipeline Overview</h2>
     <p class="section-lead">
       Figure 3 in the paper presents the pipeline as three connected parts. The implementation
       in this repository expands each part into modular scripts and analysis stages, but the
@@ -711,7 +755,7 @@
           <img
             class="figure-image"
             src="website/static/pipeline_page-0001.jpg"
-            alt="Figure 3 showing the automatic vibe-testing pipeline."
+            alt="Diagram of the three-stage automated pipeline: (A) User profiling into structured preferences, (B) Rewriting benchmark prompts for personalization, and (C) Pairwise model comparison using subjective output dimensions."
           />
         </div>
       </div>
@@ -723,7 +767,7 @@
   </section>
 
   <section class="section" id="results">
-    <h2 class="title is-3">Head-to-Head Results</h2>
+    <h2 class="title is-3">Results: Personalization Can Change Model Preferences</h2>
     <p class="section-lead">
       The paper's central experimental claim is not only that personalization matters, but
       that it can materially change preference orderings between models.
@@ -742,14 +786,14 @@
           <img
             class="figure-image"
             src="website/static/pairwise_dimension_comparison_with_objective_original_page-0001.jpg"
-            alt="Figure 4 left panel showing head-to-head results on original prompts."
+            alt="Head-to-head model comparison results on original prompts across evaluation dimensions."
           />
         </div>
         <div class="figure-image-wrapper">
           <img
             class="figure-image"
             src="website/static/pairwise_dimension_comparison_with_objective_personlized_page-0001.jpg"
-            alt="Figure 4 right panel showing head-to-head results on personalized prompts."
+            alt="Head-to-head model comparison results on personalized prompts, showing that personalization can shift model preferences."
           />
         </div>
       </div>
@@ -804,8 +848,7 @@
     <h2 class="title is-3">Related Work</h2>
     <div class="content">
       <p>
-        Recent work has moved toward more qualitative and user-centered LLM evaluation, but
-        usually captures only part of what this paper studies. <a href="https://arxiv.org/abs/2410.12851" target="_blank">VibeCheck: Discover and Quantify Qualitative Differences in Large Language Models</a>
+        Recent work on <strong>human-centered LLM evaluation</strong>, <strong>personalized model evaluation</strong>, and <strong>evaluation beyond static benchmarks</strong> has started to capture parts of what users care about in practice, but usually only covers one side of vibe-testing. <a href="https://arxiv.org/abs/2410.12851" target="_blank">VibeCheck: Discover and Quantify Qualitative Differences in Large Language Models</a>
         (Dunlap et al., 2024) and <a href="https://arxiv.org/abs/2510.07315" target="_blank">Vibe Checker: Aligning Code Evaluation with Human Preference</a>
         (Zhong et al., 2025) are especially relevant for vibe-oriented and coding-focused
         evaluation, but they do not center the empirical study of vibe-testing as a user
@@ -822,9 +865,32 @@
       </p>
     </div>
   </section>
+  
+  <section class="section" id="faq">
+  <h2 class="title is-3">FAQ</h2>
+  <div class="content">
+    <p><strong>What is vibe-testing?</strong><br />
+    Vibe-testing is the informal way users compare language models in practice, often by trying them on their own tasks and judging qualities like clarity, style, trust, and workflow fit.</p>
+
+    <p><strong>How is this different from standard LLM benchmarks?</strong><br />
+    Standard benchmarks focus on fixed prompts and fixed metrics. This paper studies how users personalize both what they test and how they judge model outputs.</p>
+
+    <p><strong>What does the paper find?</strong><br />
+    The main result is that personalization can change which model is preferred in head-to-head comparisons.</p>
+
+    <p><strong>Why does personalization matter?</strong><br />
+    Different users care about different response qualities, such as clarity, ambiguity handling, explanation style, or workflow compatibility. Those preferences are often not captured by static leaderboards.</p>
+
+    <p><strong>What tasks are studied in this paper?</strong><br />
+    The proof-of-concept pipeline is evaluated on coding tasks and coding benchmarks.</p>
+  </div>
+</section>
 
   <section class="section" id="citation">
     <h2 class="title is-3">Citation</h2>
+    <p class="section-lead">
+      If this paper is useful in your work on LLM evaluation, personalized evaluation, or model comparison, please cite it as follows.
+    </p>
     <pre class="bibtex-box">@misc{itzhak2026feelingsmetrics,
   title        = {From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs},
   author       = {Itay Itzhak and Eliya Habba and Gabriel Stanovsky and Yonatan Belinkov},
@@ -832,6 +898,19 @@
   note         = {Under review},
   howpublished = {\url{https://arxiv.org/abs/2604.14137}}
 }</pre>
+  <div class="resource-strip">
+    <a class="resource-pill" href="https://arxiv.org/abs/2604.14137">arXiv</a>
+    <a class="resource-pill" href="https://arxiv.org/pdf/2604.14137.pdf">PDF</a>
+    <a class="resource-pill" href="https://github.com/itay1itzhak/vibe-testing-llms">Code</a>
+    <a class="resource-pill" href="https://itay1itzhak.github.io/vibe-testing-llms">Project Page</a>
+  </div>
+  <p class="small-note">
+    Author links:
+    <a href="https://itay1itzhak.github.io/" target="_blank">Itay Itzhak</a>,
+    <a href="https://eliyahabba.github.io/" target="_blank">Eliya Habba</a>,
+    <a href="https://gabrielstanovsky.github.io/" target="_blank">Gabriel Stanovsky</a>,
+    <a href="https://belinkov.com/" target="_blank">Yonatan Belinkov</a>
+  </p>
   </section>
 
   <footer class="footer">
@@ -842,6 +921,9 @@
             <p>
               This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
               This website is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" rel="license" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+            <p class="small-note">
+              arXiv: 2604.14137 | Project page: https://itay1itzhak.github.io/vibe-testing-llms | Code: https://github.com/itay1itzhak/vibe-testing-llms
             </p>
           </div>
         </div>
