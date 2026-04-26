@@ -174,8 +174,6 @@ python scripts/run_experiment.py configs/experiments/example_experiment.yaml --s
 
 ## 📚 Citation
 
-The public paper URL is still a placeholder, so the citation below is set up to be updated once the final arXiv or proceedings entry is available.
-
 ```bibtex
 @misc{feelings_to_metrics_2026,
   title        = {From Feelings to Metrics: Understanding and Formalizing How Users VIBE-TEST LLMs},
@@ -186,7 +184,6 @@ The public paper URL is still a placeholder, so the citation below is set up to 
 }
 ```
 
-Replace the author field and placeholder URL once the public paper page is available.
 
 ---
 
